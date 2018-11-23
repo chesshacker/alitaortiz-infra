@@ -1,0 +1,31 @@
+Resources:
+  DNS:
+    Type: "AWS::Route53::HostedZone"
+    Properties:
+      Name: alitaortiz.com
+  MXRecordSet:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref 'DNS'
+      RecordSets:
+      - Name: alitaortiz.com.
+        Type: TXT
+        TTL: '900'
+        ResourceRecords:
+        - '"v=spf1 include:mailgun.org ~all"'
+      - Name: smtp._domainkey.alitaortiz.com.
+        Type: TXT
+        TTL: '900'
+        ResourceRecords:
+        - '"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDM+yZasSQSS17K8FHJgozEvkfwGgEfu+ARBDT5sK2T9i3aQtF7K420Vjiztx4YpU8HhexwlUrwnYmm3lzfer5UTyOFqUZ410000CvrJdeAMJvwkftHmbun4061hhvGEO7xJPYVA7S4vQGXNcsNEo/mI3to4/tTT4MVYwPZjIdjsQIDAQAB"'
+      - Name: alitaortiz.com.
+        Type: MX
+        TTL: '900'
+        ResourceRecords:
+        - '10 mxa.mailgun.org.'
+        - '10 mxb.mailgun.org.'
+      - Name: email.alitaortiz.com.
+        Type: CNAME
+        TTL: '900'
+        ResourceRecords:
+        - mailgun.org.
